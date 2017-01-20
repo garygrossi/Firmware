@@ -91,7 +91,7 @@ int test_gpio(int argc, char *argv[])
 {
 	int		ret = 0;
 
-#if BOARD_USES_PX4PIO
+#if defined(BOARD_USES_PX4PIO)
 
 	int fd = px4_open(PX4IO_DEVICE_PATH, 0);
 
