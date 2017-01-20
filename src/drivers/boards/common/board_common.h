@@ -161,8 +161,20 @@
  * has a PX4PIO processor.
  * We then publish the logical BOARD_USES_PX4PIO
  */
-#if defined(PX4IO_SERIAL_DEVICE)
+#if defined(BOARD_USES_PX4PIO_VERSION)
 #  define BOARD_USES_PX4PIO	1
+/*  Allow a board_config to override the PX4PIO FW search paths */
+#  if defined(BOARD_PX4PIO_FW_SEARCH_PATHS)
+#    define PX4PIO_FW_SEARCH_PATHS BOARD_PX4PIO_FW_SEARCH_PATHS
+#  else
+/*  Use PX4PIO FW search paths defaults based on version */
+#    if BOARD_USES_PX4PIO_VERSION == 1
+#      define PX4PIO_FW_SEARCH_PATHS {"/etc/extras/px4io-v1.bin", "/fs/microsd/px4io1.bin", "/fs/microsd/px4io.bin", nullptr }
+#    endif
+#    if BOARD_USES_PX4PIO_VERSION == 2
+#      define PX4PIO_FW_SEARCH_PATHS {"/etc/extras/px4io-v2.bin", "/fs/microsd/px4io2.bin", "/fs/microsd/px4io.bin", nullptr }
+#    endif
+#  endif
 #endif
 
 
